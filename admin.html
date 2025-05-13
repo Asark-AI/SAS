@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Your Details</title>
+  <style>
+    :root {
+      --bg-light: #f0f2f5;
+      --bg-dark: #1e1e1e;
+      --card-light: white;
+      --card-dark: #2c2c2c;
+      --text-light: #000;
+      --text-dark: #fff;
+      --button-light: #007bff;
+      --button-dark: #3399ff;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .form-container {
+      background-color: var(--card-light);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+      transition: background-color 0.3s;
+    }
+
+    .dark-mode .form-container {
+      background-color: var(--card-dark);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 5px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: var(--button-light);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .dark-mode button {
+      background-color: var(--button-dark);
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #response {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+      color: green;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      background: none;
+      border: 2px solid #555;
+      border-radius: 50px;
+      padding: 5px 10px;
+      font-weight: bold;
+      background-color: #eee;
+    }
+
+    .dark-mode .dark-toggle {
+      background-color: #444;
+      color: #fff;
+      border-color: #ccc;
+    }
+
+    @media (max-width: 500px) {
+      .form-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="dark-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+
+  <div class="form-container">
+    <h2>Submit Your Details</h2>
+    <form id="contactForm">
+      <label>Name:</label>
+      <input type="text" name="name" required />
+
+      <label>Email:</label>
+      <input type="email" name="email" required />
+
+      <label>ID:</label>
+      <input type="text" name="id" required />
+
+      <button type="submit">Submit</button>
+    </form>
+    <p id="response"></p>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = e.target;
+
+      const formData = new FormData(form);
+      formData.append("action", "register"); // Add action parameter
+
+      fetch("https://script.google.com/macros/s/AKfycbzlVMKHnXn5oECzE3FZ40gdbTctA1FmJ6uq-bMSmvOGt6OL0X7PzYrJ5OZlrdi1F8M/exec", {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("response").innerText = data;
+          form.reset();
+        })
+        .catch((err) => {
+          document.getElementById("response").innerText = "Error submitting data.";
+          console.error(err);
+        });
+    });
+  </script>
+</body>
+</html>
